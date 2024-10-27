@@ -1,0 +1,24 @@
+# Create library from source files
+FILE (GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/dg/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/dg/br1/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/equation/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/input/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/interpolation/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/mesh/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/misc/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/mpi/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/riemann/*.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/timedisc/*.c)
+
+INCLUDE_DIRECTORIES (${CMAKE_CURRENT_SOURCE_DIR}/../include)
+
+ADD_LIBRARY (DGSEM2D-LinAdv STATIC ${SOURCES})
+TARGET_COMPILE_DEFINITIONS (DGSEM2D-LinAdv PUBLIC eqSys=1)
+TARGET_COMPILE_DEFINITIONS (DGSEM2D-LinAdv PUBLIC nVars=1)
+TARGET_LINK_LIBRARIES (DGSEM2D-LinAdv m)
+
+ADD_LIBRARY (DGSEM2D-Euler STATIC ${SOURCES})
+TARGET_COMPILE_DEFINITIONS (DGSEM2D-Euler PUBLIC eqSys=2)
+TARGET_COMPILE_DEFINITIONS (DGSEM2D-Euler PUBLIC nVars=4)
+TARGET_LINK_LIBRARIES (DGSEM2D-Euler m)
+
